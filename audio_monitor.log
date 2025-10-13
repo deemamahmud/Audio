@@ -1,0 +1,217 @@
+2025-09-30 16:49:25,514 [INFO] Start: sr=44100, ch=1, dev=13, chunk=5.0, interval=10.0, thr=0.01, limit=3
+2025-09-30 16:53:56,245 [INFO] Start: sr=44100, ch=1, dev=13, chunk=5.0, interval=10.0, thr=0.01, limit=3
+2025-09-30 17:52:37,370 [INFO] Start: sr=44100, ch=1, dev=1, chunk=5.0, interval=10.0, thr=0.01, limit=3
+2025-09-30 18:24:03,523 [INFO] Start: sr=44100, ch=1, dev=1, chunk=5.0, interval=10.0, thr=0.01, limit=3
+2025-09-30 18:27:23,622 [INFO] Start: sr=44100, ch=1, dev=1, chunk=5.0, interval=10.0, thr=0.05, limit=3
+2025-09-30 18:27:28,727 [INFO] RMS=0.055596
+2025-09-30 18:27:43,827 [INFO] RMS=0.030489
+2025-09-30 18:27:43,827 [WARNING] Silent chunk 1/3
+2025-09-30 18:27:58,928 [INFO] RMS=0.168204
+2025-09-30 18:28:14,037 [INFO] RMS=0.082716
+2025-09-30 18:28:29,139 [INFO] RMS=0.073859
+2025-09-30 18:28:44,248 [INFO] RMS=0.093293
+2025-09-30 18:31:32,736 [INFO] Start: sr=44100, ch=1, dev=1, chunk=5.0, interval=10.0, thr=0.05, limit=3
+2025-09-30 18:31:37,848 [INFO] RMS=0.044272
+2025-09-30 18:31:37,849 [WARNING] Silent chunk 1/3
+2025-09-30 18:31:53,200 [INFO] RMS=0.119210
+2025-09-30 18:32:08,746 [INFO] RMS=0.110227
+2025-09-30 18:32:24,271 [INFO] RMS=0.139604
+2025-09-30 18:32:39,682 [INFO] RMS=0.056249
+2025-09-30 18:32:54,792 [INFO] RMS=0.077281
+2025-09-30 18:33:09,654 [INFO] RMS=0.009555
+2025-09-30 18:33:09,654 [WARNING] Silent chunk 1/3
+2025-09-30 18:33:19,670 [ERROR] Loop error: Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]
+Traceback (most recent call last):
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\monitor_audio.py", line 77, in main
+    rms=measure_rms(a.chunk_seconds, a.samplerate, a.channels, device=a.device)
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\monitor_audio.py", line 40, in measure_rms
+    rec = sd.rec(frames, samplerate=samplerate, channels=channels, dtype='float32', device=device)
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 279, in rec
+    ctx.start_stream(InputStream, samplerate, ctx.input_channels,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     ctx.input_dtype, callback, blocking, **kwargs)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 2634, in start_stream
+    self.stream = StreamClass(samplerate=samplerate,
+                  ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+                              channels=channels,
+                              ^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+                              finished_callback=self.finished_callback,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              **kwargs)
+                              ^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 1440, in __init__
+    _StreamBase.__init__(self, kind='input', wrap_callback='array',
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         **_remove_self(locals()))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 909, in __init__
+    _check(_lib.Pa_OpenStream(self._ptr, iparameters, oparameters,
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              samplerate, blocksize, stream_flags,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              callback_ptr, userdata),
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+           f'Error opening {self.__class__.__name__}')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 2802, in _check
+    raise PortAudioError(errormsg, err, hosterror_info)
+sounddevice.PortAudioError: Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]
+2025-09-30 18:33:24,782 [ERROR] Loop error: Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]
+Traceback (most recent call last):
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\monitor_audio.py", line 77, in main
+    rms=measure_rms(a.chunk_seconds, a.samplerate, a.channels, device=a.device)
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\monitor_audio.py", line 40, in measure_rms
+    rec = sd.rec(frames, samplerate=samplerate, channels=channels, dtype='float32', device=device)
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 279, in rec
+    ctx.start_stream(InputStream, samplerate, ctx.input_channels,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     ctx.input_dtype, callback, blocking, **kwargs)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 2634, in start_stream
+    self.stream = StreamClass(samplerate=samplerate,
+                  ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+                              channels=channels,
+                              ^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+                              finished_callback=self.finished_callback,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              **kwargs)
+                              ^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 1440, in __init__
+    _StreamBase.__init__(self, kind='input', wrap_callback='array',
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         **_remove_self(locals()))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 909, in __init__
+    _check(_lib.Pa_OpenStream(self._ptr, iparameters, oparameters,
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              samplerate, blocksize, stream_flags,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              callback_ptr, userdata),
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+           f'Error opening {self.__class__.__name__}')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 2802, in _check
+    raise PortAudioError(errormsg, err, hosterror_info)
+sounddevice.PortAudioError: Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]
+2025-09-30 18:33:29,799 [ERROR] Loop error: Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]
+Traceback (most recent call last):
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\monitor_audio.py", line 77, in main
+    rms=measure_rms(a.chunk_seconds, a.samplerate, a.channels, device=a.device)
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\monitor_audio.py", line 40, in measure_rms
+    rec = sd.rec(frames, samplerate=samplerate, channels=channels, dtype='float32', device=device)
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 279, in rec
+    ctx.start_stream(InputStream, samplerate, ctx.input_channels,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     ctx.input_dtype, callback, blocking, **kwargs)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 2634, in start_stream
+    self.stream = StreamClass(samplerate=samplerate,
+                  ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+                              channels=channels,
+                              ^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+                              finished_callback=self.finished_callback,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              **kwargs)
+                              ^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 1440, in __init__
+    _StreamBase.__init__(self, kind='input', wrap_callback='array',
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         **_remove_self(locals()))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 909, in __init__
+    _check(_lib.Pa_OpenStream(self._ptr, iparameters, oparameters,
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              samplerate, blocksize, stream_flags,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              callback_ptr, userdata),
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+           f'Error opening {self.__class__.__name__}')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 2802, in _check
+    raise PortAudioError(errormsg, err, hosterror_info)
+sounddevice.PortAudioError: Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]
+2025-09-30 18:33:34,810 [ERROR] Loop error: Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]
+Traceback (most recent call last):
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\monitor_audio.py", line 77, in main
+    rms=measure_rms(a.chunk_seconds, a.samplerate, a.channels, device=a.device)
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\monitor_audio.py", line 40, in measure_rms
+    rec = sd.rec(frames, samplerate=samplerate, channels=channels, dtype='float32', device=device)
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 279, in rec
+    ctx.start_stream(InputStream, samplerate, ctx.input_channels,
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                     ctx.input_dtype, callback, blocking, **kwargs)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 2634, in start_stream
+    self.stream = StreamClass(samplerate=samplerate,
+                  ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+                              channels=channels,
+                              ^^^^^^^^^^^^^^^^^^
+    ...<2 lines>...
+                              finished_callback=self.finished_callback,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              **kwargs)
+                              ^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 1440, in __init__
+    _StreamBase.__init__(self, kind='input', wrap_callback='array',
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                         **_remove_self(locals()))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 909, in __init__
+    _check(_lib.Pa_OpenStream(self._ptr, iparameters, oparameters,
+    ~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              samplerate, blocksize, stream_flags,
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+                              callback_ptr, userdata),
+                              ^^^^^^^^^^^^^^^^^^^^^^^^
+           f'Error opening {self.__class__.__name__}')
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mahmudd\downloads\AudioLossMonitor\venv\Lib\site-packages\sounddevice.py", line 2802, in _check
+    raise PortAudioError(errormsg, err, hosterror_info)
+sounddevice.PortAudioError: Error opening InputStream: Unanticipated host error [PaErrorCode -9999]: 'Undefined external error.' [MME error 1]
+2025-09-30 18:33:45,194 [INFO] RMS=0.031825
+2025-09-30 18:33:45,194 [WARNING] Silent chunk 2/3
+2025-09-30 18:34:00,711 [INFO] RMS=0.122427
+2025-09-30 18:34:16,242 [INFO] RMS=0.045843
+2025-09-30 18:34:16,242 [WARNING] Silent chunk 1/3
+2025-09-30 18:34:31,750 [INFO] RMS=0.036285
+2025-09-30 18:34:31,751 [WARNING] Silent chunk 2/3
+2025-09-30 18:34:47,288 [INFO] RMS=0.013610
+2025-09-30 18:34:47,288 [WARNING] Silent chunk 3/3
+2025-09-30 18:34:50,334 [WARNING] Alert sent; counter reset.
+2025-09-30 18:35:05,894 [INFO] RMS=0.023014
+2025-09-30 18:35:05,894 [WARNING] Silent chunk 1/3
+2025-09-30 18:35:21,407 [INFO] RMS=0.039312
+2025-09-30 18:35:21,407 [WARNING] Silent chunk 2/3
+2025-09-30 18:35:36,923 [INFO] RMS=0.022253
+2025-09-30 18:35:36,924 [WARNING] Silent chunk 3/3
+2025-09-30 18:35:39,808 [WARNING] Alert sent; counter reset.
+2025-09-30 18:35:55,350 [INFO] RMS=0.011226
+2025-09-30 18:35:55,350 [WARNING] Silent chunk 1/3
+2025-09-30 19:00:05,487 [INFO] Start: sr=48000, ch=1, dev=13, chunk=5.0, interval=10.0, thr=0.03, limit=3
+2025-09-30 19:00:11,183 [INFO] RMS=0.000027
+2025-09-30 19:00:11,183 [WARNING] Silent chunk 1/3
+2025-09-30 19:00:26,875 [INFO] RMS=0.000027
+2025-09-30 19:00:26,876 [WARNING] Silent chunk 2/3
+2025-09-30 19:00:42,546 [INFO] RMS=0.000027
+2025-09-30 19:00:42,546 [WARNING] Silent chunk 3/3
+2025-09-30 19:00:45,584 [WARNING] Alert sent; counter reset.
+2025-09-30 19:01:01,246 [INFO] RMS=0.000027
+2025-09-30 19:01:01,247 [WARNING] Silent chunk 1/3
+2025-09-30 19:01:16,974 [INFO] RMS=0.000027
+2025-09-30 19:01:16,974 [WARNING] Silent chunk 2/3
+2025-09-30 19:01:32,629 [INFO] RMS=0.000027
+2025-09-30 19:01:32,629 [WARNING] Silent chunk 3/3
+2025-09-30 19:01:36,676 [WARNING] Alert sent; counter reset.
+2025-09-30 19:01:52,362 [INFO] RMS=0.000027
+2025-09-30 19:01:52,362 [WARNING] Silent chunk 1/3
+2025-09-30 19:02:08,036 [INFO] RMS=0.000028
+2025-09-30 19:02:08,037 [WARNING] Silent chunk 2/3
+2025-09-30 19:02:23,720 [INFO] RMS=0.000027
+2025-09-30 19:02:23,720 [WARNING] Silent chunk 3/3
+2025-09-30 19:02:27,261 [WARNING] Alert sent; counter reset.
+2025-09-30 19:02:42,948 [INFO] RMS=0.000027
+2025-09-30 19:02:42,948 [WARNING] Silent chunk 1/3
