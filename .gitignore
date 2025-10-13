@@ -1,0 +1,14 @@
+# --- Environment and secrets ---
+.env
+
+# --- Python virtual environment ---
+venv/
+
+# --- Cache / temporary files ---
+__pycache__/
+*.pyc
+*.pyo
+*.log
+
+# --- VSCode settings (optional) ---
+.vscode/
