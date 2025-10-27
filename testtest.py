@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 from dotenv import load_dotenv
 from sounddevice import PortAudioError
 
-
 from audio_utils import (
     list_devices,
     safe_measure_rms,
@@ -185,7 +184,7 @@ def main():
                     )
                     
                     # Combined attachments: logs + 15s audio clip + inline graph
-                    send_email(subject, body, attachment=logs, embed_graph=trend_b64, audio_clip=clip)
+                    send_email(subject=subject, body=body, attachment=logs, embed_graph=trend_b64, audio_clip=clip)
 
                     # --- AUDIO RECOVERY CHECK --
                     alarm_active = True
@@ -278,33 +277,6 @@ def main():
             continue
         except Exception as e:
             logger.exception(f"Monitoring loop error: {e}")
-        
-         # ---------------------------------------------------------
-        # Internet recovery check (for system notice emails)
-        # ---------------------------------------------------------
-        try:
-            state_file = "last_failed_email.json"
-            if os.path.exists(state_file):
-                import json, requests
-                with open(state_file, "r", encoding="utf-8") as f:
-                    fail_state = json.load(f)
-
-                # Try to ping Google to confirm connectivity
-                response = requests.get("https://www.google.com", timeout=5)
-                if response.status_code == 200:
-                    subject = "System Notice: Internet Connection Restored"
-                    body = (
-                        f"The monitoring system has detected that internet connectivity has been restored.<br><br>"
-                        f"<b>Previous alert(s)</b> may not have been delivered at "
-                        f"<b>{fail_state.get('timestamp')}</b> due to the following error:<br><br>"
-                        f"<code>{fail_state.get('reason')}</code><br><br>"
-                        f"Normal monitoring and alerts have now resumed."
-                    )
-                    send_email(subject, body)
-                    os.remove(state_file)
-                    logger.info("Internet restored — sent recovery notice email and cleared failure flag.")
-        except Exception:
-            pass
 
         elapsed = time.time() - start
         time.sleep(max(0, DEFAULT_CHECK_INTERVAL - elapsed))
