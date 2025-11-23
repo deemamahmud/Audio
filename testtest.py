@@ -10,6 +10,10 @@ import soundfile as sf
 import matplotlib.pyplot as plt
 from dotenv import load_dotenv
 from sounddevice import PortAudioError
+import sys
+
+# Ensure the current directory (where this file lives) is in the module search path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from audio_utils import (
     list_devices,
@@ -34,6 +38,9 @@ from config import (
     DEFAULT_CHUNK_SECONDS,
     DEFAULT_CHECK_INTERVAL,
     REMINDER_INTERVAL,
+    ENABLE_HEALTH_EMAIL,        # Turn on/off periodic health emails
+    HEALTH_EMAIL_INTERVAL_HOURS,     # Send every 3 hours
+    HEALTH_CLIP_DURATION, 
 )
 
 # ---------------------------------------------------------
@@ -184,7 +191,7 @@ def main():
                     )
                     
                     # Combined attachments: logs + 15s audio clip + inline graph
-                    send_email(subject=subject, body=body, attachment=logs, embed_graph=trend_b64, audio_clip=clip)
+                    send_email(subject, body, attachment=logs, embed_graph=trend_b64, audio_clip=clip)
 
                     # --- AUDIO RECOVERY CHECK --
                     alarm_active = True
@@ -277,7 +284,64 @@ def main():
             continue
         except Exception as e:
             logger.exception(f"Monitoring loop error: {e}")
+        
+         # ---------------------------------------------------------
+        # Internet recovery check (for system notice emails)
+        # ---------------------------------------------------------
+        try:
+            state_file = "last_failed_email.json"
+            if os.path.exists(state_file):
+                import json, requests
+                with open(state_file, "r", encoding="utf-8") as f:
+                    fail_state = json.load(f)
 
+                # Try to ping Google to confirm connectivity
+                response = requests.get("https://www.google.com", timeout=5)
+                if response.status_code == 200:
+                    subject = "System Notice: Internet Connection Restored"
+                    body = (
+                        f"The monitoring system has detected that internet connectivity has been restored.<br><br>"
+                        f"<b>Previous alert(s)</b> may not have been delivered at "
+                        f"<b>{fail_state.get('timestamp')}</b> due to the following error:<br><br>"
+                        f"<code>{fail_state.get('reason')}</code><br><br>"
+                        f"Normal monitoring and alerts have now resumed."
+                    )
+                    send_email(subject, body)
+                    os.remove(state_file)
+                    logger.info("Internet restored — sent recovery notice email and cleared failure flag.")
+        except Exception:
+            pass
+
+        # ---------------------------------------------------------
+        # Periodic Audio Health Check (optional)
+        # ---------------------------------------------------------
+        try:
+            if ENABLE_HEALTH_EMAIL:
+                now_time = time.time()
+                if "last_health_email" not in locals():
+                    last_health_email = 0
+
+                if now_time - last_health_email >= HEALTH_EMAIL_INTERVAL_HOURS * 3600:
+                    clip = record_audio_clip(
+                        duration=HEALTH_CLIP_DURATION,
+                        samplerate=DEFAULT_SAMPLERATE,
+                        channels=channels,
+                        device=device_id,
+                    )
+                    subject = f"Audio Health Check – {CITY} [{device_label}]"
+                    body = (
+                        f"Automatic audio health check at {datetime.datetime.now():%Y-%m-%d %H:%M:%S}\n"
+                        f"City: {CITY}\nDevice: {device_label}\n"
+                        f"Audio Level (last): {db:.1f} dBFS\n"
+                        "System operating normally."
+                    )
+                    send_email(subject, body, audio_clip=clip)
+                    logger.info(f"Health check email sent (interval {HEALTH_EMAIL_INTERVAL_HOURS} h).")
+                    last_health_email = now_time
+        except Exception as e:
+            logger.warning(f"Health check email failed: {e}")
+
+        # Maintain loop timing
         elapsed = time.time() - start
         time.sleep(max(0, DEFAULT_CHECK_INTERVAL - elapsed))
 

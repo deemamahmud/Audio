@@ -1667,3 +1667,303 @@ UnboundLocalError: cannot access local variable 'send_email' where it is not ass
 2025-10-27 14:58:55,171 [INFO] Audio Level: -25.2 dBFS
 2025-10-27 14:59:05,148 [INFO] Audio Level: -23.6 dBFS
 2025-10-27 14:59:15,141 [INFO] Audio Level: -22.6 dBFS
+2025-10-28 09:46:58,390 [INFO] Logger initialized with file + console output.
+2025-10-28 09:47:05,114 [INFO] Logger initialized with file + console output.
+2025-10-28 09:47:05,116 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 09:47:05,116 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 09:47:10,398 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 09:47:10,398 [WARNING] Silent chunk 1/3
+2025-10-28 09:47:22,964 [INFO] Logger initialized with file + console output.
+2025-10-28 09:47:25,864 [INFO] Logger initialized with file + console output.
+2025-10-28 09:47:25,866 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 09:47:25,866 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 09:47:31,106 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 09:47:31,106 [WARNING] Silent chunk 1/3
+2025-10-28 09:47:41,101 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 09:47:41,101 [WARNING] Silent chunk 2/3
+2025-10-28 09:47:51,105 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 09:47:51,106 [WARNING] Silent chunk 3/3
+2025-10-28 09:47:52,351 [INFO] Recording 15s clip for alert...
+2025-10-28 09:48:08,506 [INFO] Internet connection verified.
+2025-10-28 09:48:08,507 [INFO] Attached log file: log_2025-10-28_09-48-08.txt
+2025-10-28 09:48:08,595 [INFO] Attached audio clip 'audio_clip_2025-10-28_09-48-08.wav' (8640044 bytes).
+2025-10-28 09:48:14,897 [INFO] Email sent.
+2025-10-28 09:48:20,151 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 09:48:30,158 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 09:48:40,160 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 09:48:50,170 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 11:41:20,603 [INFO] Logger initialized with file + console output.
+2025-10-28 11:43:12,730 [INFO] Logger initialized with file + console output.
+2025-10-28 11:51:03,786 [INFO] Logger initialized with file + console output.
+2025-10-28 11:51:10,347 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 11:51:10,349 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 12:56:58,138 [INFO] Logger initialized with file + console output.
+2025-10-28 12:58:52,566 [INFO] Logger initialized with file + console output.
+2025-10-28 12:58:54,617 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 12:58:54,617 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 12:58:59,994 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 12:58:59,994 [WARNING] Silent chunk 1/3
+2025-10-28 12:58:59,994 [INFO] Recording 15s clip for alert...
+2025-10-28 12:59:16,530 [INFO] Internet connection verified.
+2025-10-28 12:59:16,599 [INFO] Attached audio clip 'audio_clip_2025-10-28_12-59-16.wav' (8640044 bytes).
+2025-10-28 12:59:23,423 [INFO] Email sent.
+2025-10-28 12:59:23,426 [INFO] Health check email sent (interval 0.0167 h).
+2025-10-28 12:59:28,906 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 12:59:28,907 [WARNING] Silent chunk 2/3
+2025-10-28 12:59:38,778 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 12:59:38,779 [WARNING] Silent chunk 3/3
+2025-10-28 12:59:40,370 [INFO] Recording 15s clip for alert...
+2025-10-28 12:59:56,531 [INFO] Internet connection verified.
+2025-10-28 12:59:56,534 [INFO] Attached log file: log_2025-10-28_12-59-56.txt
+2025-10-28 12:59:56,616 [INFO] Attached audio clip 'audio_clip_2025-10-28_12-59-56.wav' (8640044 bytes).
+2025-10-28 13:00:03,042 [INFO] Email sent.
+2025-10-28 13:00:03,045 [INFO] Recording 15s clip for alert...
+2025-10-28 13:00:19,296 [INFO] Internet connection verified.
+2025-10-28 13:00:19,373 [INFO] Attached audio clip 'audio_clip_2025-10-28_13-00-19.wav' (8640044 bytes).
+2025-10-28 13:00:24,982 [INFO] Email sent.
+2025-10-28 13:00:24,984 [INFO] Health check email sent (interval 0.0167 h).
+2025-10-28 13:00:30,462 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 13:53:44,737 [INFO] Logger initialized with file + console output.
+2025-10-28 13:53:47,839 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 13:53:47,840 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 13:53:52,971 [INFO] Audio Level: -63.2 dBFS
+2025-10-28 13:53:52,972 [WARNING] Silent chunk 1/3
+2025-10-28 13:53:52,972 [INFO] Recording 15s clip for alert...
+2025-10-28 13:54:08,917 [INFO] Internet connection verified.
+2025-10-28 13:54:08,993 [INFO] Attached audio clip 'audio_clip_2025-10-28_13-54-08.wav' (8640044 bytes).
+2025-10-28 13:54:15,432 [INFO] Email sent.
+2025-10-28 13:54:15,434 [INFO] Health check email sent (interval 3 h).
+2025-10-28 13:54:20,536 [INFO] Audio Level: -88.0 dBFS
+2025-10-28 13:54:20,537 [WARNING] Silent chunk 2/3
+2025-10-28 13:54:30,544 [INFO] Audio Level: -41.6 dBFS
+2025-10-28 13:54:30,545 [INFO] Silence counter reset (2 chunks before recovery).
+2025-10-28 13:54:40,550 [INFO] Audio Level: -45.1 dBFS
+2025-10-28 13:54:50,538 [INFO] Audio Level: -63.3 dBFS
+2025-10-28 13:54:50,538 [WARNING] Silent chunk 1/3
+2025-10-28 13:55:00,541 [INFO] Audio Level: -43.0 dBFS
+2025-10-28 13:55:00,542 [INFO] Silence counter reset (1 chunks before recovery).
+2025-10-28 13:55:10,540 [INFO] Audio Level: -51.0 dBFS
+2025-10-28 13:55:20,542 [INFO] Audio Level: -66.3 dBFS
+2025-10-28 13:55:20,542 [WARNING] Silent chunk 1/3
+2025-10-28 13:55:30,542 [INFO] Audio Level: -65.7 dBFS
+2025-10-28 13:55:30,542 [WARNING] Silent chunk 2/3
+2025-10-28 13:55:40,541 [INFO] Audio Level: -69.4 dBFS
+2025-10-28 13:55:40,541 [WARNING] Silent chunk 3/3
+2025-10-28 13:55:41,956 [INFO] Recording 15s clip for alert...
+2025-10-28 13:55:57,953 [INFO] Internet connection verified.
+2025-10-28 13:55:57,955 [INFO] Attached log file: log_2025-10-28_13-55-57.txt
+2025-10-28 13:55:58,037 [INFO] Attached audio clip 'audio_clip_2025-10-28_13-55-57.wav' (8640044 bytes).
+2025-10-28 14:57:08,053 [INFO] Logger initialized with file + console output.
+2025-10-28 14:57:12,087 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 14:57:12,087 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 14:57:17,234 [INFO] Audio Level: -91.2 dBFS
+2025-10-28 14:57:17,234 [WARNING] Silent chunk 1/3
+2025-10-28 14:57:17,234 [INFO] Recording 15s clip for alert...
+2025-10-28 15:02:54,502 [INFO] Logger initialized with file + console output.
+2025-10-28 15:02:56,835 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 15:02:56,835 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 15:03:01,989 [INFO] Audio Level: -90.8 dBFS
+2025-10-28 15:03:01,989 [WARNING] Silent chunk 1/3
+2025-10-28 15:03:07,093 [INFO] Audio Level: -91.3 dBFS
+2025-10-28 15:03:07,094 [WARNING] Silent chunk 2/3
+2025-10-28 15:03:12,204 [INFO] Audio Level: -91.3 dBFS
+2025-10-28 15:03:12,204 [WARNING] Silent chunk 3/3
+2025-10-28 15:03:13,671 [INFO] Recording 15s clip for alert...
+2025-10-28 15:03:29,961 [INFO] Internet connection verified.
+2025-10-28 15:03:29,963 [INFO] Attached log file: log_2025-10-28_15-03-29.txt
+2025-10-28 15:03:30,110 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-03-29.wav' (8640044 bytes).
+2025-10-28 15:03:37,187 [INFO] Email sent.
+2025-10-28 15:03:42,319 [INFO] Audio Level: -87.9 dBFS
+2025-10-28 15:05:29,883 [INFO] Logger initialized with file + console output.
+2025-10-28 15:05:32,326 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 15:05:32,327 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 15:05:37,454 [INFO] Audio Level: -48.7 dBFS
+2025-10-28 15:05:37,454 [INFO] Recording 15s clip for alert...
+2025-10-28 15:05:53,473 [INFO] Internet connection verified.
+2025-10-28 15:05:53,559 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-05-53.wav' (8640044 bytes).
+2025-10-28 15:06:00,485 [INFO] Email sent.
+2025-10-28 15:06:00,488 [INFO] Health check email sent (interval 3 h).
+2025-10-28 15:06:05,618 [INFO] Audio Level: -59.8 dBFS
+2025-10-28 15:06:05,618 [WARNING] Silent chunk 1/3
+2025-10-28 15:06:10,727 [INFO] Audio Level: -59.5 dBFS
+2025-10-28 15:06:10,727 [WARNING] Silent chunk 2/3
+2025-10-28 15:06:15,850 [INFO] Audio Level: -53.0 dBFS
+2025-10-28 15:06:15,850 [INFO] Silence counter reset (2 chunks before recovery).
+2025-10-28 15:06:20,956 [INFO] Audio Level: -54.6 dBFS
+2025-10-28 15:06:26,063 [INFO] Audio Level: -57.7 dBFS
+2025-10-28 15:06:26,063 [WARNING] Silent chunk 1/3
+2025-10-28 15:06:31,168 [INFO] Audio Level: -47.6 dBFS
+2025-10-28 15:06:31,168 [INFO] Silence counter reset (1 chunks before recovery).
+2025-10-28 15:06:36,274 [INFO] Audio Level: -87.3 dBFS
+2025-10-28 15:06:36,275 [WARNING] Silent chunk 1/3
+2025-10-28 15:06:41,383 [INFO] Audio Level: -48.1 dBFS
+2025-10-28 15:06:41,383 [INFO] Silence counter reset (1 chunks before recovery).
+2025-10-28 15:06:46,497 [INFO] Audio Level: -49.3 dBFS
+2025-10-28 15:06:51,604 [INFO] Audio Level: -44.3 dBFS
+2025-10-28 15:06:56,715 [INFO] Audio Level: -62.4 dBFS
+2025-10-28 15:06:56,715 [WARNING] Silent chunk 1/3
+2025-10-28 15:07:01,851 [INFO] Audio Level: -71.3 dBFS
+2025-10-28 15:07:01,851 [WARNING] Silent chunk 2/3
+2025-10-28 15:07:06,950 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 15:07:06,950 [WARNING] Silent chunk 3/3
+2025-10-28 15:07:08,318 [INFO] Recording 15s clip for alert...
+2025-10-28 15:07:24,302 [INFO] Internet connection verified.
+2025-10-28 15:07:24,304 [INFO] Attached log file: log_2025-10-28_15-07-24.txt
+2025-10-28 15:07:24,420 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-07-24.wav' (8640044 bytes).
+2025-10-28 15:07:32,832 [INFO] Email sent.
+2025-10-28 15:07:37,940 [INFO] Audio Level: -93.4 dBFS
+2025-10-28 15:07:43,040 [INFO] Audio Level: -88.3 dBFS
+2025-10-28 15:07:48,140 [INFO] Audio Level: -38.7 dBFS
+2025-10-28 15:07:48,140 [INFO] Clear chunk 1/2
+2025-10-28 15:07:53,243 [INFO] Audio Level: -46.6 dBFS
+2025-10-28 15:07:58,380 [INFO] Audio Level: -53.1 dBFS
+2025-10-28 15:08:03,480 [INFO] Audio Level: -45.6 dBFS
+2025-10-28 15:09:44,562 [INFO] Logger initialized with file + console output.
+2025-10-28 15:09:46,692 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 15:09:46,692 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 15:09:51,798 [INFO] Audio Level: -80.1 dBFS
+2025-10-28 15:09:51,798 [WARNING] Silent chunk 1/3
+2025-10-28 15:09:51,798 [INFO] Recording 15s clip for alert...
+2025-10-28 15:10:07,727 [INFO] Internet connection verified.
+2025-10-28 15:10:07,804 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-10-07.wav' (8640044 bytes).
+2025-10-28 15:10:13,548 [INFO] Email sent.
+2025-10-28 15:10:13,550 [INFO] Health check email sent (status: LOSS DETECTED, interval 3 h).
+2025-10-28 15:10:18,658 [INFO] Audio Level: -65.0 dBFS
+2025-10-28 15:10:18,658 [WARNING] Silent chunk 2/3
+2025-10-28 15:10:23,759 [INFO] Audio Level: -46.8 dBFS
+2025-10-28 15:10:23,760 [INFO] Silence counter reset (2 chunks before recovery).
+2025-10-28 15:10:28,858 [INFO] Audio Level: -41.5 dBFS
+2025-10-28 15:10:33,960 [INFO] Audio Level: -56.7 dBFS
+2025-10-28 15:10:33,961 [WARNING] Silent chunk 1/3
+2025-10-28 15:10:39,068 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 15:10:39,069 [WARNING] Silent chunk 2/3
+2025-10-28 15:10:44,171 [INFO] Audio Level: -96.7 dBFS
+2025-10-28 15:10:44,171 [WARNING] Silent chunk 3/3
+2025-10-28 15:10:44,554 [INFO] Recording 15s clip for alert...
+2025-10-28 15:11:00,747 [INFO] Internet connection verified.
+2025-10-28 15:11:00,749 [INFO] Attached log file: log_2025-10-28_15-11-00.txt
+2025-10-28 15:11:00,853 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-11-00.wav' (8640044 bytes).
+2025-10-28 15:11:07,098 [INFO] Email sent.
+2025-10-28 15:11:12,269 [INFO] Audio Level: -75.3 dBFS
+2025-10-28 15:11:17,368 [INFO] Audio Level: -36.5 dBFS
+2025-10-28 15:11:17,369 [INFO] Clear chunk 1/2
+2025-10-28 15:11:22,468 [INFO] Audio Level: -37.1 dBFS
+2025-10-28 15:11:22,468 [INFO] Clear chunk 2/2
+2025-10-28 15:11:22,627 [INFO] Recording 15s clip for alert...
+2025-10-28 15:11:38,589 [INFO] Internet connection verified.
+2025-10-28 15:11:38,591 [INFO] Attached log file: log_2025-10-28_15-11-38.txt
+2025-10-28 15:11:38,728 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-11-38.wav' (8640044 bytes).
+2025-10-28 15:11:44,956 [INFO] Email sent.
+2025-10-28 15:11:44,959 [INFO] CLEAR email sent. Duration: 0m 15s
+2025-10-28 15:11:50,097 [INFO] Audio Level: -92.2 dBFS
+2025-10-28 15:11:50,098 [WARNING] Silent chunk 1/3
+2025-10-28 15:11:55,198 [INFO] Audio Level: -92.1 dBFS
+2025-10-28 15:11:55,198 [WARNING] Silent chunk 2/3
+2025-10-28 15:28:46,427 [INFO] Logger initialized with file + console output.
+2025-10-28 15:28:46,428 [INFO] File logging initialized: .\audio_monitor_2025-10-28.log (cleanup every 7 days)
+2025-10-28 15:28:46,432 [INFO] Log cleanup: no old logs found (retention 7 days).
+2025-10-28 15:28:52,784 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 15:28:52,784 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 15:28:57,893 [ERROR] Monitoring loop error: type object 'datetime.datetime' has no attribute 'datetime'
+Traceback (most recent call last):
+  File "C:\Users\mahmudd\Downloads\AudioLossMonitor\monitor_audio.py", line 256, in main
+    timestamp_history.append(datetime.datetime.now())
+                             ^^^^^^^^^^^^^^^^^
+AttributeError: type object 'datetime.datetime' has no attribute 'datetime'
+2025-10-28 15:28:57,896 [INFO] Recording 15s clip for alert...
+2025-10-28 15:30:58,406 [INFO] Logger initialized with file + console output.
+2025-10-28 15:30:58,407 [INFO] File logging initialized: .\audio_monitor_2025-10-28.log (cleanup every 7 days)
+2025-10-28 15:30:58,409 [INFO] Log cleanup skipped — last cleanup was within 7 days.
+2025-10-28 15:31:00,636 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 15:31:00,637 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 15:31:05,742 [INFO] Audio Level: -56.7 dBFS
+2025-10-28 15:31:05,742 [ERROR] Monitoring loop error: type object 'datetime.datetime' has no attribute 'datetime'
+Traceback (most recent call last):
+  File "C:\Users\mahmudd\Downloads\AudioLossMonitor\monitor_audio.py", line 267, in main
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+          ^^^^^^^^^^^^^^^^^
+AttributeError: type object 'datetime.datetime' has no attribute 'datetime'
+2025-10-28 15:31:05,744 [INFO] Recording 15s clip for alert...
+2025-10-28 15:31:20,840 [WARNING] Health check email failed: type object 'datetime.datetime' has no attribute 'datetime'
+2025-10-28 15:31:25,931 [INFO] Audio Level: -90.1 dBFS
+2025-10-28 15:31:25,931 [ERROR] Monitoring loop error: type object 'datetime.datetime' has no attribute 'datetime'
+Traceback (most recent call last):
+  File "C:\Users\mahmudd\Downloads\AudioLossMonitor\monitor_audio.py", line 267, in main
+    now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+          ^^^^^^^^^^^^^^^^^
+AttributeError: type object 'datetime.datetime' has no attribute 'datetime'
+2025-10-28 15:31:25,932 [INFO] Recording 15s clip for alert...
+2025-10-28 15:34:34,918 [INFO] Logger initialized with file + console output.
+2025-10-28 15:35:25,869 [INFO] Logger initialized with file + console output.
+2025-10-28 15:35:31,763 [INFO] Logger initialized with file + console output.
+2025-10-28 15:35:31,764 [INFO] File logging initialized: .\audio_monitor_2025-10-28.log (cleanup every 7 days)
+2025-10-28 15:35:31,765 [WARNING] Could not clean old logs: module 'datetime' has no attribute 'now'
+2025-10-28 15:35:33,878 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 15:35:33,878 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 15:35:38,981 [ERROR] Monitoring loop error: module 'datetime' has no attribute 'now'
+Traceback (most recent call last):
+  File "C:\Users\mahmudd\Downloads\AudioLossMonitor\monitor_audio.py", line 256, in main
+    timestamp_history.append(datetime.now())
+                             ^^^^^^^^^^^^
+AttributeError: module 'datetime' has no attribute 'now'
+2025-10-28 15:35:38,982 [INFO] Recording 15s clip for alert...
+2025-10-28 15:35:54,993 [INFO] Internet connection verified.
+2025-10-28 15:35:55,075 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-35-54.wav' (8640044 bytes).
+2025-10-28 15:36:01,096 [INFO] Email sent.
+2025-10-28 15:36:01,099 [INFO] Health check email sent (status: LOSS DETECTED, interval 3 h).
+2025-10-28 15:36:19,500 [INFO] Logger initialized with file + console output.
+2025-10-28 15:36:19,501 [INFO] File logging initialized: .\audio_monitor_2025-10-28.log (cleanup every 7 days)
+2025-10-28 15:36:19,502 [WARNING] Could not clean old logs: module 'datetime' has no attribute 'now'
+2025-10-28 15:36:21,205 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 15:36:21,206 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 15:36:32,462 [INFO] Logger initialized with file + console output.
+2025-10-28 15:36:32,462 [INFO] File logging initialized: .\audio_monitor_2025-10-28.log (cleanup every 7 days)
+2025-10-28 15:36:32,463 [WARNING] Could not clean old logs: module 'datetime' has no attribute 'now'
+2025-10-28 15:36:37,234 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 15:36:37,234 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 15:36:42,341 [INFO] Audio Level: -93.6 dBFS
+2025-10-28 15:36:42,342 [WARNING] Silent chunk 1/3
+2025-10-28 15:36:42,342 [INFO] Recording 15s clip for alert...
+2025-10-28 15:36:58,245 [INFO] Internet connection verified.
+2025-10-28 15:36:58,322 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-36-58.wav' (8640044 bytes).
+2025-10-28 15:37:04,637 [INFO] Email sent.
+2025-10-28 15:37:04,639 [INFO] Health check email sent (status: LOSS DETECTED, interval 3 h).
+2025-10-28 15:37:09,741 [INFO] Audio Level: -80.4 dBFS
+2025-10-28 15:37:09,741 [WARNING] Silent chunk 2/3
+2025-10-28 15:37:14,844 [INFO] Audio Level: -90.1 dBFS
+2025-10-28 15:37:14,844 [WARNING] Silent chunk 3/3
+2025-10-28 15:37:16,371 [INFO] Recording 15s clip for alert...
+2025-10-28 15:37:32,319 [INFO] Internet connection verified.
+2025-10-28 15:37:32,325 [INFO] Attached log file: log_2025-10-28_15-37-32.txt
+2025-10-28 15:37:32,445 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-37-32.wav' (8640044 bytes).
+2025-10-28 15:37:38,806 [INFO] Email sent.
+2025-10-28 15:37:43,922 [INFO] Audio Level: -60.5 dBFS
+2025-10-28 15:37:52,024 [INFO] Logger initialized with file + console output.
+2025-10-28 15:37:52,025 [INFO] File logging initialized: .\audio_monitor_2025-10-28.log (cleanup every 7 days)
+2025-10-28 15:37:52,026 [WARNING] Could not clean old logs: module 'datetime' has no attribute 'now'
+2025-10-28 15:41:10,578 [INFO] Logger initialized with file + console output.
+2025-10-28 15:41:10,579 [INFO] File logging initialized: .\audio_monitor_2025-10-28.log (cleanup every 7 days)
+2025-10-28 15:41:10,581 [INFO] Log cleanup skipped — last cleanup was within 7 days.
+2025-10-28 15:41:31,446 [INFO] Monitoring started for Gaza [Microphone Array (Intel® Smart ] (6ch @ 48000Hz)
+2025-10-28 15:41:31,447 [INFO] Static thresholds: Silence<-55.0 dBFS, Clear>-40.0 dBFS, Distortion>-2.0 dBFS
+2025-10-28 15:41:36,558 [INFO] Audio Level: -63.0 dBFS
+2025-10-28 15:41:36,559 [WARNING] Silent chunk 1/3
+2025-10-28 15:41:36,559 [INFO] Recording 15s clip for alert...
+2025-10-28 15:41:52,464 [INFO] Internet connection verified.
+2025-10-28 15:41:52,538 [INFO] Attached audio clip 'audio_clip_2025-10-28_15-41-52.wav' (8640044 bytes).
+2025-10-28 15:41:58,574 [INFO] Email sent.
+2025-10-28 15:41:58,577 [INFO] Health check email sent (status: LOSS DETECTED, interval 3 h).
+2025-10-28 15:42:03,678 [INFO] Audio Level: -72.9 dBFS
+2025-10-28 15:42:03,678 [WARNING] Silent chunk 2/3
+2025-10-28 15:42:08,778 [INFO] Audio Level: -74.1 dBFS
+2025-10-28 15:42:08,779 [WARNING] Silent chunk 3/3
+2025-10-28 15:42:09,007 [INFO] Recording 15s clip for alert...
+2025-10-29 10:57:36,838 [INFO] Logger initialized with file + console output.
+2025-10-29 11:01:11,429 [INFO] Logger initialized with file + console output.
+2025-10-29 11:07:06,224 [INFO] Logger initialized with file + console output.
+2025-10-29 12:27:18,870 [INFO] Logger initialized with file + console output.
+2025-10-29 12:49:03,941 [INFO] Logger initialized with file + console output.
+2025-10-29 12:50:46,566 [INFO] Logger initialized with file + console output.
+2025-10-29 14:06:07,480 [INFO] Logger initialized with file + console output.
+2025-10-29 14:10:54,557 [INFO] Logger initialized with file + console output.
+2025-10-29 14:11:10,359 [INFO] Logger initialized with file + console output.
