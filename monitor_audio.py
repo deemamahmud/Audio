@@ -9,7 +9,6 @@ import logging
 import sounddevice as sd
 import numpy as np
 import soundfile as sf
-import matplotlib.pyplot as plt
 from dotenv import load_dotenv
 from sounddevice import PortAudioError
 import threading
@@ -41,9 +40,9 @@ from config import (
     DEFAULT_CHUNK_SECONDS,
     DEFAULT_CHECK_INTERVAL,
     REMINDER_INTERVAL,
-    ENABLE_HEALTH_EMAIL,        # Turn on/off periodic health emails
-    HEALTH_EMAIL_INTERVAL_HOURS,     # Send every 3 hours
-    HEALTH_CLIP_DURATION, 
+    ENABLE_HEALTH_EMAIL,
+    HEALTH_EMAIL_INTERVAL_HOURS,
+    HEALTH_CLIP_DURATION,
     LOG_RETENTION_DAYS,
     LOG_ENABLE_COLORS,
     LOG_COLOR_FORMAT,
@@ -52,32 +51,31 @@ from config import (
     LOG_COLORS,
 )
 
-
 # ---------------------------------------------------------
 # Logging setup with daily rotation, folder organization, and retention
 # ---------------------------------------------------------
 
-# Create a dedicated logs directory
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# --- Ensure logs folder exists ---
+
+# Ensure logs folder exists
 LOG_DIR = os.path.join(BASE_DIR, "logs")
 os.makedirs(LOG_DIR, exist_ok=True)
 
-# --- Build today's log filename ---
+# Build today's log filename
 LOG_BASENAME = os.path.splitext(os.path.basename(LOG_FILE))[0]
 TODAY_LOG_FILE = os.path.join(LOG_DIR, f"{LOG_BASENAME}_{datetime.datetime.now():%Y-%m-%d}.log")
 LAST_CLEANUP_FILE = os.path.join(LOG_DIR, "last_log_cleanup.txt")
 
-# --- Reset handlers to avoid duplicates ---
+# Reset handlers to avoid duplicates
 for h in list(logger.handlers):
     logger.removeHandler(h)
 
-# --- File handler ---
+# File handler
 file_handler = logging.FileHandler(TODAY_LOG_FILE, mode="a", encoding="utf-8")
 file_handler.setFormatter(logging.Formatter("%(asctime)s [%(levelname)s] %(message)s"))
 logger.addHandler(file_handler)
 
-# --- Console handler (colored if enabled) ---
+# Console handler (colored if enabled)
 try:
     if LOG_ENABLE_COLORS:
         from colorlog import ColoredFormatter
@@ -143,14 +141,13 @@ def should_run_cleanup():
         return True
 
 
-# --- Run cleanup on startup ---
+# Run cleanup on startup
 if should_run_cleanup():
     cleanup_old_logs()
 else:
     logger.info(f"Log cleanup skipped — last cleanup was within {LOG_RETENTION_DAYS} days.")
 
-
-# --- Background cleanup every 24h ---
+# Background cleanup every 24h
 def schedule_periodic_cleanup():
     def cleanup_loop():
         while True:
@@ -163,11 +160,11 @@ def schedule_periodic_cleanup():
 schedule_periodic_cleanup()
 
 # ---------------------------------------------------------
-# Extract recent sanitized logs for email
+# Extract recent sanitized logs for email (uses TODAY_LOG_FILE)
 # ---------------------------------------------------------
 def extract_recent_logs(lines=400):
     try:
-        with open(LOG_FILE, "r", encoding="utf-8", errors="ignore") as f:
+        with open(TODAY_LOG_FILE, "r", encoding="utf-8", errors="ignore") as f:
             data = f.readlines()[-lines:]
         text = clean_logs("".join(data))
         buf = io.BytesIO(text.encode("utf-8"))
@@ -176,12 +173,10 @@ def extract_recent_logs(lines=400):
     except Exception as e:
         logger.warning(f"Could not extract logs: {e}")
         return None
-
-
 # ---------------------------------------------------------
 # Record short audio clip (optional)
 # ---------------------------------------------------------
-def record_audio_clip(duration=15, samplerate=48000, channels=1, device=None):
+def record_audio_clip(duration=15, samplerate=DEFAULT_SAMPLERATE, channels=1, device=None):
     """Capture short WAV clip for attachment."""
     try:
         logger.info(f"Recording {duration}s clip for alert...")
@@ -198,7 +193,7 @@ def record_audio_clip(duration=15, samplerate=48000, channels=1, device=None):
 
 
 # ---------------------------------------------------------
-# Device selection
+# Device selection (only used at startup, never again)
 # ---------------------------------------------------------
 def select_input_device():
     try:
@@ -219,7 +214,7 @@ def select_input_device():
 
 
 # ---------------------------------------------------------
-# Main monitoring logic (STATIC thresholds)
+# Main monitoring logic (STATIC thresholds) + graceful Ctrl+C
 # ---------------------------------------------------------
 def main():
     load_dotenv()
@@ -229,13 +224,13 @@ def main():
     parser.add_argument("--list-devices", action="store_true", help="List available input devices")
     args = parser.parse_args()
 
-    # --- Handle --list-devices ---
+    # Handle --list-devices
     if args.list_devices:
         print("\nAvailable Input Devices:\n")
         print(list_devices())
         return
 
-    # --- Device setup ---
+    # Device setup (ONLY ONCE)
     device_id = args.device or select_input_device()
 
     try:
@@ -258,19 +253,121 @@ def main():
         f"Clear>{CLEAR_THRESHOLD_DB} dBFS, Distortion>{DISTORTION_THRESHOLD_DB} dBFS"
     )
 
+    # ---------------------------------------------------------
+    # State variables (unchanged)
+    # ---------------------------------------------------------
     silent_count = clear_count = distortion_count = 0
     alarm_active = distortion_active = False
     last_alert_time_loss = last_alert_time_distortion = 0
     alert_start_loss = alert_start_distortion = None
+
+    # NEW — device disconnect tracking
+    device_disconnected = False
+    disconnect_start_time = None
+    last_disconnect_alert = 0
+
+    # Health email state
+    last_health_email = 0
+
+    # History buffers
     db_history, timestamp_history = [], []
     MAX_HISTORY = 120
 
-    # --- Monitoring loop ---
-    while True:
-        start = time.time()
-        try:
-            rms = safe_measure_rms(DEFAULT_CHUNK_SECONDS, DEFAULT_SAMPLERATE, channels, device=device_id)
-            db = rms_to_dbfs(rms)
+    # ---------------------------------------------------------
+    # Monitoring loop
+    # ---------------------------------------------------------
+    try:
+        while True:
+            start = time.time()
+
+            try:
+                # Measure RMS from the SAME device (no fallback)
+                rms = safe_measure_rms(DEFAULT_CHUNK_SECONDS, DEFAULT_SAMPLERATE, channels, device=device_id)
+                db = rms_to_dbfs(rms)
+
+                # Auto-clear disconnect state once audio reads again
+                if device_disconnected:
+                    logger.info("Device appears readable again (reconnecting check pending).")
+
+                device_readable = True
+
+            except PortAudioError:
+                device_readable = False
+
+            # ---------------------------------------------------------
+            # DEVICE DISCONNECTED (FIRST ALERT)
+            # ---------------------------------------------------------
+            if not device_readable and not device_disconnected:
+                logger.error(f"DEVICE DISCONNECTED → {device_name} (ID {device_id})")
+
+                subject = f"ALERT: Audio Device Disconnected – {CITY}"
+                body = (
+                    f"City: {CITY}\n"
+                    f"Device: {device_name} (ID {device_id})\n"
+                    f"Time: {datetime.datetime.now():%Y-%m-%d %H:%M:%S}\n\n"
+                    "The selected audio device is no longer available.\n"
+                    "Monitoring will continue until this exact device returns."
+                )
+
+                send_email(subject, body, attachment=extract_recent_logs())
+
+                device_disconnected = True
+                disconnect_start_time = time.time()
+                last_disconnect_alert = time.time()
+
+                time.sleep(5)
+                continue
+
+            # ---------------------------------------------------------
+            # REMINDER WHILE DISCONNECTED
+            # ---------------------------------------------------------
+            if device_disconnected and not device_readable:
+                if time.time() - last_disconnect_alert >= REMINDER_INTERVAL:
+                    duration = int(time.time() - disconnect_start_time)
+                    m, s = divmod(duration, 60)
+
+                    subject = f"REMINDER: Device Still Disconnected – {CITY}"
+                    body = (
+                        f"City: {CITY}\n"
+                        f"Device: {device_name} (ID {device_id})\n"
+                        f"Duration: {m}m {s}s\n"
+                        "\n"
+                        "Device remains disconnected and unavailable."
+                    )
+
+                    send_email(subject, body, attachment=extract_recent_logs())
+                    last_disconnect_alert = time.time()
+
+                time.sleep(5)
+                continue
+
+            # ---------------------------------------------------------
+            # DEVICE RECONNECTED
+            # ---------------------------------------------------------
+            if device_disconnected and device_readable:
+                logger.info(f"DEVICE RECONNECTED → {device_name}")
+
+                clip = record_audio_clip(10, samplerate=DEFAULT_SAMPLERATE, channels=channels, device=device_id)
+
+                subject = f"CLEAR: Audio Device Reconnected – {CITY}"
+                body = (
+                    f"City: {CITY}\n"
+                    f"Device: {device_name} (ID {device_id})\n"
+                    f"Time: {datetime.datetime.now():%Y-%m-%d %H:%M:%S}\n"
+                    "\n"
+                    "The audio device has returned and monitoring has resumed."
+                )
+
+                send_email(subject, body, attachment=extract_recent_logs(), audio_clip=clip)
+
+                device_disconnected = False
+                disconnect_start_time = None
+                last_disconnect_alert = 0
+
+                # continue to normal audio monitoring
+            # ---------------------------------------------------------
+            # AUDIO PROCESSING (only runs if device is connected)
+            # ---------------------------------------------------------
             db_history.append(db)
             timestamp_history.append(datetime.datetime.now())
 
@@ -285,97 +382,105 @@ def main():
             is_distorted = db > DISTORTION_THRESHOLD_DB
             now = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-            # --- AUDIO LOSS ALERT ---
+            # ---------------------------------------------------------
+            # AUDIO LOSS ALERT
+            # ---------------------------------------------------------
             if not alarm_active and is_silent:
                 silent_count += 1
                 logger.warning(f"Silent chunk {silent_count}/{SILENCE_LIMIT}")
+
                 if silent_count >= SILENCE_LIMIT:
                     logs = extract_recent_logs()
                     trend_b64 = generate_trend_plot(db_history, timestamp_history, CLEAR_THRESHOLD_DB)
-                    clip = record_audio_clip(duration=15, samplerate=DEFAULT_SAMPLERATE, channels=channels, device=device_id)
+                    clip = record_audio_clip(15, samplerate=DEFAULT_SAMPLERATE, channels=channels, device=device_id)
+
                     subject = f"ALERT: Audio Loss [{CITY}] [{device_label}]"
                     body = (
                         f"ALERT at {now}\nCity: {CITY}\nDevice: {device_label}\n"
                         f"Audio Level: {db:.1f} dBFS\nThreshold: {SILENCE_THRESHOLD_DB:.1f} dBFS\n"
                     )
-                    
-                    # Combined attachments: logs + 15s audio clip + inline graph
+
                     send_email(subject, body, attachment=logs, embed_graph=trend_b64, audio_clip=clip)
 
-                    # --- AUDIO RECOVERY CHECK --
                     alarm_active = True
                     alert_start_loss = time.time()
                     silent_count = 0
                     last_alert_time_loss = time.time()
 
             elif not is_silent:
-                if silent_count > 0:
-                    logger.info(f"Silence counter reset ({silent_count} chunks before recovery).")
                 silent_count = 0
 
-            # --- AUDIO RESTORED ---
+            # ---------------------------------------------------------
+            # AUDIO RESTORED
+            # ---------------------------------------------------------
             if alarm_active and is_clear:
                 clear_count += 1
                 logger.info(f"Clear chunk {clear_count}/{CLEAR_LIMIT}")
+
                 if clear_count >= CLEAR_LIMIT:
                     duration = time.time() - (alert_start_loss or time.time())
-                    days, rem = divmod(int(duration), 86400)
-                    hours, rem = divmod(rem, 3600)
-                    minutes, seconds = divmod(rem, 60)
-
-                    if days > 0:
-                        duration_str = f"{days}d {hours}h {minutes}m {seconds}s"
-                    elif hours > 0:
-                        duration_str = f"{hours}h {minutes}m {seconds}s"
-                    else:
-                        duration_str = f"{minutes}m {seconds}s"
+                    m, s_val = divmod(int(duration), 60)
+                    duration_str = f"{m}m {s_val}s"
 
                     logs = extract_recent_logs()
                     trend_b64 = generate_trend_plot(db_history, timestamp_history, CLEAR_THRESHOLD_DB)
-                    clip = record_audio_clip(duration=15, samplerate=DEFAULT_SAMPLERATE, channels=channels, device=device_id)
+                    clip = record_audio_clip(15, samplerate=DEFAULT_SAMPLERATE, channels=channels, device=device_id)
+
                     subject = f"CLEAR: Audio Restored [{CITY}] [{device_label}]"
                     body = (
                         f"CLEAR at {now}\nCity: {CITY}\nDevice: {device_label}\n"
                         f"Audio Level: {db:.1f} dBFS\nDuration: {duration_str}\n"
                     )
+
                     send_email(subject, body, attachment=logs, audio_clip=clip, embed_graph=trend_b64)
-                    logger.info(f"CLEAR email sent. Duration: {duration_str}")
+
                     alarm_active = False
                     silent_count = clear_count = 0
                     last_alert_time_loss = 0
                     alert_start_loss = None
 
-            # --- AUDIO LOSS REMINDER ---
+            # ---------------------------------------------------------
+            # AUDIO LOSS REMINDER
+            # ---------------------------------------------------------
             elif alarm_active and time.time() - last_alert_time_loss >= REMINDER_INTERVAL:
                 duration = time.time() - (alert_start_loss or time.time())
-                m, s = divmod(int(duration), 60)
-                duration_str = f"{m}m {s}s"
+                m, s_val = divmod(int(duration), 60)
+                duration_str = f"{m}m {s_val}s"
+
                 logs = extract_recent_logs()
                 trend_b64 = generate_trend_plot(db_history, timestamp_history, CLEAR_THRESHOLD_DB)
-                clip = record_audio_clip(duration=15, samplerate=DEFAULT_SAMPLERATE, channels=channels, device=device_id)
+                clip = record_audio_clip(15, samplerate=DEFAULT_SAMPLERATE, channels=channels, device=device_id)
+
                 subject = f"REMINDER: Audio Still Lost [{CITY}] [{device_label}]"
                 body = (
                     f"Still silent as of {now}\nCity: {CITY}\nDevice: {device_label}\n"
                     f"Audio Level: {db:.1f} dBFS\nDuration so far: {duration_str}"
                 )
+
                 send_email(subject, body, attachment=logs, audio_clip=clip, embed_graph=trend_b64)
-                logger.warning(f"Reminder sent (silent for {duration_str})")
+
                 last_alert_time_loss = time.time()
 
-            # --- DISTORTION ALERT ---
+            # ---------------------------------------------------------
+            # DISTORTION ALERT
+            # ---------------------------------------------------------
             if not distortion_active and is_distorted:
                 distortion_count += 1
                 logger.warning(f"Distortion chunk {distortion_count}/3")
+
                 if distortion_count >= 3:
                     logs = extract_recent_logs()
                     trend_b64 = generate_trend_plot(db_history, timestamp_history, CLEAR_THRESHOLD_DB)
-                    clip = record_audio_clip(duration=15, samplerate=DEFAULT_SAMPLERATE, channels=channels, device=device_id)
+                    clip = record_audio_clip(15, samplerate=DEFAULT_SAMPLERATE, channels=channels, device=device_id)
+
                     subject = f"ALERT: Audio Distortion [{CITY}] [{device_label}]"
                     body = (
                         f"ALERT at {now}\nCity: {CITY}\nDevice: {device_label}\n"
                         f"Audio Level: {db:.1f} dBFS\nThreshold: {DISTORTION_THRESHOLD_DB:.1f} dBFS\n"
                     )
+
                     send_email(subject, body, attachment=logs, audio_clip=clip, embed_graph=trend_b64)
+
                     distortion_active = True
                     alert_start_distortion = time.time()
                     last_alert_time_distortion = time.time()
@@ -386,53 +491,13 @@ def main():
                 distortion_active = False
                 logger.info("Distortion cleared, audio normalized.")
 
-        except PortAudioError as e:
-            logger.error(f"PortAudioError: {e}")
-            time.sleep(5)
-            device_id = select_input_device()
-            continue
-        except Exception as e:
-            logger.exception(f"Monitoring loop error: {e}")
-        
-        # ---------------------------------------------------------
-        # Internet recovery check (for system notice emails)
-        # ---------------------------------------------------------
-        try:
-            state_file = "last_failed_email.json"
-            if os.path.exists(state_file):
-                import json, requests
-                with open(state_file, "r", encoding="utf-8") as f:
-                    fail_state = json.load(f)
-
-                # Try to ping Google to confirm connectivity
-                response = requests.get("https://www.google.com", timeout=5)
-                if response.status_code == 200:
-                    subject = "System Notice: Internet Connection Restored"
-                    body = (
-                        f"The monitoring system has detected that internet connectivity has been restored.<br><br>"
-                        f"<b>Previous alert(s)</b> may not have been delivered at "
-                        f"<b>{fail_state.get('timestamp')}</b> due to the following error:<br><br>"
-                        f"<code>{fail_state.get('reason')}</code><br><br>"
-                        f"Normal monitoring and alerts have now resumed."
-                    )
-                    send_email(subject, body)
-                    os.remove(state_file)
-                    logger.info("Internet restored — sent recovery notice email and cleared failure flag.")
-        except Exception:
-            pass
-
-
-        # ---------------------------------------------------------
-        # Periodic Audio Health Check (runs on startup + every X hours)
-        # ---------------------------------------------------------
-        try:
+            # ---------------------------------------------------------
+            # PERIODIC HEALTH EMAIL
+            # ---------------------------------------------------------
             if ENABLE_HEALTH_EMAIL:
                 now_time = time.time()
-                if "last_health_email" not in locals():
-                    last_health_email = 0  # ensures first send happens immediately
-
                 if now_time - last_health_email >= HEALTH_EMAIL_INTERVAL_HOURS * 3600:
-                    # Determine system health based on current dB level
+
                     if db < SILENCE_THRESHOLD_DB:
                         health_status = "Audio loss detected"
                         subject_status = "LOSS DETECTED"
@@ -443,7 +508,6 @@ def main():
                         health_status = "System operating normally"
                         subject_status = "OK"
 
-                    # Record short audio clip for verification
                     clip = record_audio_clip(
                         duration=HEALTH_CLIP_DURATION,
                         samplerate=DEFAULT_SAMPLERATE,
@@ -451,7 +515,6 @@ def main():
                         device=device_id,
                     )
 
-                    # Build subject and email body dynamically
                     subject = f"Audio Health Check: {subject_status} – {CITY} [{device_label}]"
                     body = (
                         f"Automatic audio health check at {datetime.datetime.now():%Y-%m-%d %H:%M:%S}\n"
@@ -461,14 +524,30 @@ def main():
                     )
 
                     send_email(subject, body, audio_clip=clip)
-                    logger.info(
-                        f"Health check email sent (status: {subject_status}, interval {HEALTH_EMAIL_INTERVAL_HOURS} h)."
-                    )
+
                     last_health_email = now_time
-        except Exception as e:
-            logger.warning(f"Health check email failed: {e}")
 
+            # ---------------------------------------------------------
+            # Maintain loop timing
+            # ---------------------------------------------------------
+            elapsed = time.time() - start
+            time.sleep(max(0, DEFAULT_CHECK_INTERVAL - elapsed))
 
+    # ---------------------------------------------------------
+    # Graceful Ctrl+C handling
+    # ---------------------------------------------------------
+    except KeyboardInterrupt:
+        print("\n\nMonitoring interrupted.")
+        choice = input("Do you want to terminate? (y/n): ").strip().lower()
+
+        if choice == "y":
+            sd.stop()
+            logger.info("Application terminated by user request.")
+            print("Monitoring stopped. Exiting.\n")
+            sys.exit(0)
+        else:
+            logger.info("User canceled termination. Monitoring will resume.")
+            print("Monitoring will continue.\n")
 
 
 
