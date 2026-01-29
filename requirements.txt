@@ -1,11 +1,12 @@
-# Core libraries
-numpy==1.26.4
-sounddevice==0.5.1
-python-dotenv==1.0.1
-requests==2.32.3
+# === Core Libraries ===
+numpy
+sounddevice
+soundfile
+python-dotenv
+requests
 
-# Email and logging (standard libs, shown here for completeness)
-# smtplib and logging are built into Python, no need to install
+# === Logging / Utility ===
+colorlog
 
-# Optional (if you want plotting support later)
-matplotlib==3.9.0
+# === Optional (Plotting / Graph Support) ===
+matplotlib
